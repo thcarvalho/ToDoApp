@@ -8,7 +8,7 @@ module.exports = {
     return res.json(todo)
   },
   async list(req, res){
-    const todo = await Todo.find();
+    const todo = await Todo.find({user: req.params.user});
     return res.json({todo, user: req.user._id})
   },  
   async show(req, res){
