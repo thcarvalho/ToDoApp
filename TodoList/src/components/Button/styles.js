@@ -12,3 +12,6 @@ export const StyledText = styled.Text`
   font-size: 15px;
   text-align: center;
 `;
+export const StyledSmallButton = styled(StyledButton)`
+  width: 100px;
+`;
