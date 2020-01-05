@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
-import { createAppContainer, createStackNavigator } from "react-navigation";
+import { createAppContainer, createStackNavigator } from 'react-navigation';
 
-import Home from "../pages/Home";
-import Login from "../pages/Login";
-import SignIn from "../pages/SignIn";
+import Home from '../pages/Home';
+import Login from '../pages/Login';
+import SignIn from '../pages/SignIn';
 
 const StackNavigation = createStackNavigator({
   // Login: {
@@ -31,9 +31,9 @@ const StackNavigation = createStackNavigator({
     navigationOptions: () => ({
       title: 'TodoList',
       headerStyle: {
-        backgroundColor: "#2b3dbb"
+        backgroundColor: '#2b3dbb',
       },
-      headerTintColor: "#FFF"
+      headerTintColor: '#FFF',
     }),
   },
 });
