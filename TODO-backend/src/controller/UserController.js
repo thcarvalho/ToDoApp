@@ -28,6 +28,10 @@ module.exports = {
     const user = await User.find();
     return res.json(user);
   },
+  async find(req, res) {
+    const user = await User.findById(req.params.id);
+    return res.json(user);
+  },
   async login(req, res) {
     const { email, password } = req.body;
 
@@ -50,5 +54,9 @@ module.exports = {
       return res.status(400).send({ error: "Falha na Requisição" })
     }
 
+  },
+  async update(req, res) {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    return res.json(user);
   }
 }
