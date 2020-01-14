@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Input from "../../components/Input";
 import Button from "../../components/Button";
@@ -12,6 +12,16 @@ import AsyncStorage from '@react-native-community/async-storage';
 export default function Login(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    async function verificarUsuario() {
+      const token = await AsyncStorage.getItem('@userToken');
+      if (token) {
+        return props.navigation.navigate('Home');
+      }
+    }
+    verificarUsuario();
+  }, []);
 
   async function login() {
     try {
