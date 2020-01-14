@@ -80,18 +80,19 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
   },
   innerModal: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fafafa",
-    width: 320,
-    height: 230,
+    // width: 320,
+    // height: 230,
+    height: 600,
     borderWidth: 1,
     borderColor: "#2b3dbb",
-    borderRadius: 5,
+    // borderRadius: 5,
     elevation: 5,
   }
 })

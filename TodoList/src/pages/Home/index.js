@@ -1,22 +1,23 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, Modal, TouchableOpacity, ToastAndroid } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Modal, TouchableOpacity, ToastAndroid, ActivityIndicator } from 'react-native';
 
 import api from "../../services/api";
 import AsyncStorage from '@react-native-community/async-storage';
 
-import { Container } from '../../styles/global-styles';
+import { Container, Header, HeaderTitle } from '../../styles/global-styles';
 import ListItem from "../../components/ListItem";
 import ModalAddTodo from "./ModalAddTodo";
 import { FabLarge } from "../../components/Fab";
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import IconIO from 'react-native-vector-icons/Ionicons';
 
-export default function Home() {
+export default function Home(props) {
   const [todos, setTodos] = useState([]);
-
   const [modalVisible, setModalVisible] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     recuperarTodos();
@@ -62,16 +63,37 @@ export default function Home() {
 
   return (
     <Container>
-      <FlatList
-        data={todos}
-        keyExtractor={item => item._id}
-        renderItem={renderItem}
-        onRefresh={() => {
-          recuperarTodos();
-          setRefreshing(true);
-        }}
-        refreshing={refreshing}
-      />
+      {
+        todos != 0 ? (
+          <FlatList
+            style={{ marginTop: 50 }}
+            data={todos}
+            keyExtractor={item => item._id}
+            renderItem={renderItem}
+            onRefresh={() => {
+              recuperarTodos();
+              setRefreshing(true);
+            }}
+            refreshing={refreshing}
+          />
+        ) : (
+          loading ? (
+            <ActivityIndicator animating color={'#2b3dbb'} size={'large'} />
+          ) : (
+            <Text>Nada aqui</Text>
+          )
+        )
+      }
+      <Header>
+        <TouchableOpacity activeOpacity={0.7} onPress={props.navigation.openDrawer}>
+          <Icon name="bars" size={24} color="#2b3dbb" />
+        </TouchableOpacity>
+        <HeaderTitle>ToDo List</HeaderTitle>
+        {/* <TouchableOpacity onPress={() => props.navigation.navigate('Config')} activeOpacity={0.7}>
+          <IconIO name="md-settings" size={24} color={'#2b3dbb'} />
+        </TouchableOpacity> */}
+        <View />
+      </Header>
       <FabLarge
         style={styles.fab}
         bgcolor={"#2b3dbb"}
@@ -88,7 +110,7 @@ export default function Home() {
       >
         <ModalAddTodo addTodo={addTodo} closeModal={closeModal} />
       </Modal>
-    </Container>
+    </Container >
   );
 }
 
@@ -99,4 +121,4 @@ const styles = StyleSheet.create({
     right: 20,
     elevation: 3,
   },
-})
+});

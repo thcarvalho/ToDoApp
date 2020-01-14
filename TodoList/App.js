@@ -1,7 +1,7 @@
 import React from 'react';
 import './src/styles/status-bar'
-import StackNavigation from "./src/routes/stack-navigator";
+import Routes from "./src/routes/main-router";
 
-const App = () => <StackNavigation />
+const App = () => <Routes />;
 
 export default App;
