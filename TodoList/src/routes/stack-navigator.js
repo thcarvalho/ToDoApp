@@ -1,41 +1,22 @@
 /* eslint-disable prettier/prettier */
 import { createAppContainer, createStackNavigator } from 'react-navigation';
 
-import Home from '../pages/Home';
-import Login from '../pages/Login';
 import SignIn from '../pages/SignIn';
+import Config from '../pages/Config';
 
-const StackNavigation = createStackNavigator({
-  // Login: {
-  //   screen: Login,
-  //   navigationOptions: () => ({
-  //     title: 'TodoList',
-  //     headerStyle: {
-  //       backgroundColor: "#2b3dbb"
-  //     },
-  //     headerTintColor: "#FFF"
-  //   }),
-  // },
-  // SignIn: {
-  //   screen: SignIn,
-  //   navigationOptions: () => ({
-  //     title: 'TodoList',
-  //     headerStyle: {
-  //       backgroundColor: "#2b3dbb"
-  //     },
-  //     headerTintColor: "#FFF"
-  //   }),
-  // },
-  Home: {
-    screen: Home,
-    navigationOptions: () => ({
-      title: 'TodoList',
-      headerStyle: {
-        backgroundColor: '#2b3dbb',
+const StackNavigator = createStackNavigator({
+    SignIn: {
+      screen: SignIn,
+      navigationOptions: {
+        header: null,
       },
-      headerTintColor: '#FFF',
-    }),
-  },
-});
+    },
+    Config: {
+      screen: Config,
+      navigationOptions: {
+        header: null,
+      },
+    },
+  });
 
-export default createAppContainer(StackNavigation);
+export default createAppContainer(StackNavigator);
