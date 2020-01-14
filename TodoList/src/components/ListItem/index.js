@@ -30,7 +30,23 @@ export default function ListItem(props) {
   }
 
   async function checkTodo() {
-
+    const token = await AsyncStorage.getItem('@userToken');
+    const userId = await AsyncStorage.getItem('@userId');
+    const data = { concluido: true };
+    await api.put(`/todos/${userId}/${props.id}/update`, data, {
+      headers: { authToken: token },
+    })
+    .then(() => {
+      ToastAndroid.show('Tarefa Concluida!', ToastAndroid.SHORT);
+    }
+    )
+    .catch(error => {
+      ToastAndroid.show('Falha ao Atualizar Tarefa!', ToastAndroid.SHORT);
+      console.log(error.response.data);
+      console.log(error.response.status);
+      console.log(error.response.headers);
+    }
+    );
   }
 
   async function editTodo(titulo, descricao) {
@@ -64,7 +80,7 @@ export default function ListItem(props) {
     console.log(props.id);
     try {
       await api.delete(`/todos/${userId}/${props.id}/delete`, {
-        headers: { authToken: token }
+        headers: { authToken: token },
       });
       ToastAndroid.show('Tarefa deletada!', ToastAndroid.SHORT);
       console.log(props.todo);
@@ -100,6 +116,7 @@ export default function ListItem(props) {
         break;
     }
   }
+
   return (
     <ListContainer style={{ paddingBottom: iconToggle ? 20 : 15 }} >
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
@@ -136,7 +153,7 @@ export default function ListItem(props) {
               bgcolor={'#d12121'}
               onPress={() => openModal("delete")}
             >
-              <IconFO name="close" size={15} color="#fff" />
+              <IconFO name="trash" size={15} color="#fff" />
             </FabSmall>
             <Modal
               visible={modalDeleteVisible}
