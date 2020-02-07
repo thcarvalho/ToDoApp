@@ -7,7 +7,7 @@ export function FabSmall(props) {
   return (
     <Fab1
       style={props.style}
-      activeOpacity={props.activeOpacity}
+      activeOpacity={0.7}
       bgcolor={props.bgcolor}
       onPress={props.onPress}
     >
@@ -18,7 +18,7 @@ export function FabSmall(props) {
 export function FabLarge(props) {
   return (
     <Fab2 style={props.style}
-      activeOpacity={props.activeOpacity}
+      activeOpacity={0.7}
       bgcolor={props.bgcolor}
       onPress={props.onPress}
     >
