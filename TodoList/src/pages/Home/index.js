@@ -6,7 +6,7 @@ import api from "../../services/api";
 import AsyncStorage from '@react-native-community/async-storage';
 
 import { Container, Header, HeaderTitle } from '../../styles/global-styles';
-import ListItem from "../../components/ListItem";
+import ListItem from "../../components/ListItem/HomeListItem";
 import ModalAddTodo from "./ModalAddTodo";
 import { FabLarge } from "../../components/Fab";
 
@@ -15,11 +15,12 @@ import IconIO from 'react-native-vector-icons/Ionicons';
 
 export default function Home(props) {
   const [todos, setTodos] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     recuperarTodos();
   }, [todos]);
 
@@ -28,10 +29,11 @@ export default function Home(props) {
     const id = await AsyncStorage.getItem('@userId');
     try {
       const response = await api.get(`/todos/${id}`, {
-        headers: { authToken: token }
+        headers: { authToken: token },
+        params: { concluido: false }
       });
-      const { todo } = response.data;
-      setTodos(todo);
+      // const { todo } = response.data;
+      setTodos(response.data);
       setRefreshing(false);
     } catch (error) {
       if (error.response) {
@@ -40,6 +42,7 @@ export default function Home(props) {
         console.log(error.response.headers);
       }
     }
+    setLoading(false);
   }
 
   function addTodo(todo) {
@@ -50,7 +53,7 @@ export default function Home(props) {
 
   function renderItem({ item }) {
     return (
-      <ListItem todo={todos} titulo={item.titulo} descricao={item.descricao} id={item._id} />
+      <ListItem todo={item} />
     );
   }
 
@@ -80,7 +83,7 @@ export default function Home(props) {
           loading ? (
             <ActivityIndicator animating color={'#2b3dbb'} size={'large'} />
           ) : (
-            <Text>Nada aqui</Text>
+            <Text>Nada para mostrar :(</Text>
           )
         )
       }
@@ -97,7 +100,6 @@ export default function Home(props) {
       <FabLarge
         style={styles.fab}
         bgcolor={"#2b3dbb"}
-        activeOpacity={0.7}
         onPress={openModal}
       >
         <Icon name="plus" size={20} color={'#fff'} />

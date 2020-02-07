@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, StatusBar } from 'react-native';
 import IconFA from "react-native-vector-icons/FontAwesome";
 
 import Input from "../Input";
