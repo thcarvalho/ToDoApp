@@ -17,6 +17,10 @@ const TodoSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  deletada: {
+    type: Boolean,
+    default: false,
+  },
   dataAdicao: {
     type: Date,
     default: Date.now
