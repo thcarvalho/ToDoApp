@@ -13,7 +13,7 @@ export default function ModalDelete(props) {
           <IconFA name="close" size={15} color="#2b3dbb" />
         </Close>
         <Titulo>Excluir</Titulo>
-        <Text style={styles.text}>Deseja mover esta tarefa para a lixeira?</Text>
+        <Text style={styles.text}>Deseja excluir permanentemente esta tarefa?</Text>
         <BtnContainer>
           <TouchableOpacity onPress={props.closeModal}>
             <BtnText>Cancelar</BtnText>
