@@ -10,9 +10,15 @@ import { Header, HeaderTitle } from "../../styles/global-styles";
 
 import BackButton from "../../components/BackButton";
 import ModalLogout from "./ModalLogout";
+import ModalEmail from './ModalEmail';
+import ModalNome from './ModalNome';
+import ModalSenha from './ModalSenha';
 
 export default function Config(props) {
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalEmailVisible, setModalEmailVisible] = useState(false);
+  const [modalSenhaVisible, setModalSenhaVisible] = useState(false);
+  const [modalNomeVisible, setModalNomeVisible] = useState(false);
+  const [modalLogoutVisible, setModalLogoutVisible] = useState(false);
   const [nome, setNome] = useState('...');
   const [email, setEmail] = useState('...');
 
@@ -33,12 +39,6 @@ export default function Config(props) {
     getUser();
   }, []);
 
-  function openModal() {
-    setModalVisible(true);
-  }
-  function closeModal() {
-    setModalVisible(false);
-  }
   function logout() {
     props.navigation.navigate('Login');
   }
@@ -46,37 +46,61 @@ export default function Config(props) {
   return (
     <View>
       <View style={{ marginTop: 50 }}>
-        <SmallContainer style={{borderTopWidth: 0}}>
+        <SmallContainer onPress={() => setModalNomeVisible(true)} style={{borderTopWidth: 0}}>
           <View style={{ padding: 15 }}>
             <Title>Nome:</Title>
             <Content>{nome}</Content>
           </View>
         </SmallContainer>
-        <SmallContainer>
+        <SmallContainer onPress={() => setModalEmailVisible(true)} activeOpacity={0.6}>
           <View style={{ padding: 15 }}>
             <Title>E-Mail:</Title>
             <Content>{email}</Content>
           </View>
         </SmallContainer>
-        <SmallContainer>
+        <SmallContainer onPress={() => setModalSenhaVisible(true)} >
           <View style={{ padding: 15 }}>
             <Title>Senha:</Title>
             <Content>*********</Content>
           </View>
         </SmallContainer>
         <SmallContainer style={{borderBottomWidth: 1}}>
-          <TouchableOpacity activeOpacity={0.6} onPress={openModal} style={{ padding: 15 }}>
+          <TouchableOpacity activeOpacity={0.6} onPress={() => setModalLogoutVisible(true)} style={{ padding: 15 }}>
             <Logout>Logout</Logout>
           </TouchableOpacity>
         </SmallContainer>
       </View>
       <Modal
-        visible={modalVisible}
-        onRequestClose={closeModal}
-        animationType={'slide'}
+        visible={modalEmailVisible}
+        onRequestClose={() => setModalEmailVisible(false)}
+        animationType={'fade'}
         transparent
       >
-        <ModalLogout logout={logout} closeModal={closeModal} />
+        <ModalEmail closeModal={() => setModalEmailVisible(false)} />
+      </Modal>
+      <Modal
+        visible={modalNomeVisible}
+        onRequestClose={() => setModalNomeVisible(false)}
+        animationType={'fade'}
+        transparent
+      >
+        <ModalNome closeModal={() => setModalNomeVisible(false)} />
+      </Modal>
+      <Modal
+        visible={modalSenhaVisible}
+        onRequestClose={() => setModalSenhaVisible(false)}
+        animationType={'fade'}
+        transparent
+      >
+        <ModalSenha closeModal={() => setModalSenhaVisible(false)} />
+      </Modal>
+      <Modal
+        visible={modalLogoutVisible}
+        onRequestClose={() => setModalLogoutVisible(false)}
+        animationType={'fade'}
+        transparent
+      >
+        <ModalLogout logout={logout} closeModal={() => setModalLogoutVisible(false)} />
       </Modal>
       <Header>
         <BackButton onPress={() => props.navigation.navigate('Home')} />
