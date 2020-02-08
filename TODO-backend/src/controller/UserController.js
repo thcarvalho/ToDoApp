@@ -58,5 +58,26 @@ module.exports = {
   async update(req, res) {
     const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
     return res.json(user);
+  },
+  async updatePassword(req, res) {
+    try {
+      const { password } = req.body;
+      const hash = await bcrypt.hash(password, 10);
+      const user = await User.findByIdAndUpdate(req.params.id, { password: hash }, { new: true });
+      return res.json(user);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  async verifyPassword(req, res) {
+    const { password } = req.query;
+    const { id } = req.params
+    const user = await User.findById(id).select('+password');
+
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) {
+      return res.status(400).send({ error: 'Senha Incorreta' });
+    }
+    res.json({ valid: true })
   }
 }
